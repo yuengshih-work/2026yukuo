@@ -60,11 +60,11 @@ h3{font-family:var(--serif);font-size:19px;margin:26px 0 10px}
 .stg{display:grid;grid-template-columns:34px 1fr;gap:0 12px;padding:12px 0;border-bottom:1px solid var(--line)}
 .stg:last-child{border-bottom:0}
 .stg .num{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;color:var(--muted)}
-.stg[data-s="施工中"] .num{border-color:var(--accent);color:var(--accent)}
+.stg[data-s="進行中"] .num{border-color:var(--accent);color:var(--accent)}
 .stg[data-s="已完成"] .num{background:var(--ok);border-color:var(--ok);color:#fff}
 .stg .t{font-weight:700}
 .stg .s{font-size:13px;margin-left:6px;color:var(--muted)}
-.stg[data-s="施工中"] .s{color:var(--accent);font-weight:700}
+.stg[data-s="進行中"] .s{color:var(--accent);font-weight:700}
 .stg[data-s="已完成"] .s{color:var(--ok);font-weight:700}
 .stg .d{font-size:14px;color:var(--muted);line-height:1.5}
 .chk{display:flex;gap:8px;align-items:center;font-size:15px;margin-top:6px;line-height:1.4}
@@ -454,14 +454,16 @@ async function fileData(f){
 }
 
 /* ---------- stages / pay ---------- */
-const stg=k=>(D.status.stages||{})[k]||'未開始';
+const stg=k=>{const v=(D.status.stages||{})[k]||'未開始';return v==='施工中'?'進行中':v;};
 const chk=n=>(D.status.checks||{})[n];
 function renderStages(){
   $('#stages').innerHTML=STAGES.map((s,i)=>`<div class="stg" data-s="${stg(s.k)}"><div class="num">${stg(s.k)==='已完成'?'✓':i+1}</div>
     <div><div><span class="t">${s.n}</span><span class="s">${stg(s.k)}</span></div><div class="d">${s.d}</div>
     ${s.checks.map(c=>{const v=chk(c);return `<div class="chk"><span class="dot ${v?'pass':''}"></span><span>${c}${v?`<span class="muted small">　${esc(roc(v.date))}合格</span>`:''}</span></div>`;}).join('')}</div></div>`).join('');
-  const cur=[...STAGES].reverse().find(s=>stg(s.k)==='施工中')||[...STAGES].reverse().find(s=>stg(s.k)==='已完成');
-  $('#kStage').textContent=STAGES.every(s=>stg(s.k)==='已完成')?'全部完工':cur?`${cur.n}${stg(cur.k)}`:'準備中';
+  const cur=[...STAGES].reverse().find(s=>stg(s.k)==='進行中')||[...STAGES].reverse().find(s=>stg(s.k)==='已完成');
+  const built=stg('s3')!=='未開始'||stg('s4')!=='未開始';
+  const sub=cur?`<div class="small muted" style="font-family:var(--sans);font-weight:400">${esc(cur.n)}${stg(cur.k)}</div>`:'';
+  $('#kStage').innerHTML=STAGES.every(s=>stg(s.k)==='已完成')?'全部完工':!built?'尚未施工'+sub:cur?`${esc(cur.n)}${stg(cur.k)}`:'準備中';
   const paid=D.status.paid||{};
   const ready=p=>p.need.every(n=>n==='__SIGN__'?!!mainDoc():!!chk(n));
   // 每期收款紀錄：{net:日期, tax:日期}；舊格式（單一日期字串）視為未稅、稅金皆已收
@@ -484,7 +486,7 @@ function renderStages(){
     if(r.net||r.tax) p[i]=r; else delete p[i]; saveStatus({paid:p});});
   if(ADMIN){
     $('#statusEditor').innerHTML=STAGES.map(s=>`<div class="stedit"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>${s.n}</b>
-      <select data-st="${s.k}">${['未開始','施工中','已完成'].map(v=>`<option ${stg(s.k)===v?'selected':''}>${v}</option>`).join('')}</select></div>
+      <select data-st="${s.k}">${['未開始','進行中','已完成'].map(v=>`<option ${stg(s.k)===v?'selected':''}>${v}</option>`).join('')}</select></div>
       <div class="chips">${s.checks.map(c=>`<button class="btn sm ${chk(c)?'':'ghost'}" data-ck="${c}">${chk(c)?'✓ ':''}${c}</button>`).join('')}</div></div>`).join('')+
       '<p class="small muted" style="margin:8px 0 0">點驗收點可標記／取消合格，日期自動為今天。</p>';
     $('#statusEditor').querySelectorAll('[data-st]').forEach(sel=>sel.onchange=()=>saveStatus({stages:{...(D.status.stages||{}),[sel.dataset.st]:sel.value}}));
