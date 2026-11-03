@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E2833">
+<meta name="robots" content="noindex,nofollow">
+<title>裕國街整修工程｜平安住</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3EFE6;--card:#FFFDF8;--ink:#1E2833;--muted:#5E6873;--line:#DDD5C5;
+  --blue:#2D5B86;--accent:#D2532A;--ok:#2E7D4F;--warn:#B7791F;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --serif:"Noto Serif TC","PMingLiU","Songti TC",serif;
+  --navh:62px;
+}
+@media (prefers-color-scheme:dark){:root{--paper:#14181D;--card:#1C2229;--ink:#ECE7DC;--muted:#9CA5AF;--line:#323A44;--blue:#86AED6;--accent:#F07D55;--ok:#62BE8A;--warn:#E3AC4E}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.8 var(--sans);
+  padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom,0px) + 16px)}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+
+/* header */
+header{background:var(--ink);color:#F3EFE6;padding:calc(env(safe-area-inset-top,0px) + 18px) 0 18px}
+header .firm{font-size:13px;opacity:.75}
+header h1{font-family:var(--serif);font-weight:900;font-size:27px;line-height:1.3;margin:4px 0 2px;letter-spacing:.03em}
+header .addr{font-size:14px;opacity:.85}
+
+/* bottom nav */
+nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);display:grid;grid-template-columns:repeat(5,1fr)}
+nav.bar button{height:var(--navh);background:none;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--muted);font-size:12px;cursor:pointer}
+nav.bar svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.bar button[aria-selected="true"]{color:var(--accent);font-weight:700}
+
+section.pg{display:none;padding:20px 0}
+section.pg.on{display:block}
+h2{font-family:var(--serif);font-size:24px;margin:0 0 4px;line-height:1.4}
+h3{font-family:var(--serif);font-size:19px;margin:26px 0 10px}
+.lead{color:var(--muted);font-size:15px;margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.muted{color:var(--muted)} .small{font-size:14px}
+.note{border-left:4px solid var(--warn);background:var(--card);padding:10px 14px;border-radius:8px;font-size:15px;margin:0 0 14px}
+.note.ok{border-color:var(--ok)}
+
+/* summary numbers */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi .k{font-size:13px;color:var(--muted)}
+.kpi .v{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.4}
+.kpi.wide{grid-column:1/-1}
+
+/* stages */
+.stg{display:grid;grid-template-columns:34px 1fr;gap:0 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.stg:last-child{border-bottom:0}
+.stg .num{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;color:var(--muted)}
+.stg[data-s="施工中"] .num{border-color:var(--accent);color:var(--accent)}
+.stg[data-s="已完成"] .num{background:var(--ok);border-color:var(--ok);color:#fff}
+.stg .t{font-weight:700}
+.stg .s{font-size:13px;margin-left:6px;color:var(--muted)}
+.stg[data-s="施工中"] .s{color:var(--accent);font-weight:700}
+.stg[data-s="已完成"] .s{color:var(--ok);font-weight:700}
+.stg .d{font-size:14px;color:var(--muted);line-height:1.5}
+.chk{display:flex;gap:8px;align-items:center;font-size:15px;margin-top:6px;line-height:1.4}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);flex:none}
+.dot.pass{background:var(--ok);border-color:var(--ok)}
+
+/* pay list */
+.payi{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.payi:last-child{border-bottom:0}
+.payi .c{font-size:14px;color:var(--muted);line-height:1.5}
+.payi .a{text-align:right;white-space:nowrap;font-weight:700}
+.pill{display:inline-block;font-size:12px;padding:0 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);font-weight:500;margin-top:4px}
+.pill.go{border-color:var(--accent);color:var(--accent)} .pill.done{border-color:var(--ok);color:var(--ok)}
+.pill.part{border-color:var(--warn);color:var(--warn)}
+.payi{flex-direction:column;gap:6px}
+.payi .hd{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.payi .lines{display:grid;gap:4px;padding:8px 10px;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+.payi .ln{display:flex;align-items:center;gap:10px;min-height:40px;font-size:15px}
+.payi .ln input{width:22px;height:22px;accent-color:var(--ok);flex:none;margin:0}
+.payi .ln input:disabled{opacity:1}
+.payi .ln .nm{flex:1}
+.payi .ln .dt{font-size:12px;color:var(--ok);display:block;line-height:1.3}
+.payi .ln .m{font-variant-numeric:tabular-nums;white-space:nowrap}
+.payi .ln.got .m{color:var(--ok)}
+.paysum{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.paysum b{font-variant-numeric:tabular-nums}
+
+/* contract */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.doc{font-family:var(--serif);font-size:17px;line-height:1.95}
+.doc p{margin:0 0 .7em}
+.doc ul{padding-left:1.2em;margin:0 0 .7em} .doc li p{margin:0}
+.doc blockquote{margin:0 0 .7em;padding:0}
+.preamble{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.preamble .ttl{font-weight:900;font-size:21px;text-align:center;letter-spacing:.08em;margin-bottom:12px}
+details.art{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+details.art summary{list-style:none;cursor:pointer;padding:14px 44px 14px 16px;font-weight:600;position:relative;line-height:1.5}
+details.art summary::-webkit-details-marker{display:none}
+details.art summary::after{content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+details.art[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+details.art .body{padding:0 16px 14px}
+.fill{color:var(--blue);font-weight:700;border-bottom:1.5px solid var(--blue);padding:0 2px}
+.fill.empty{color:var(--muted);font-weight:400}
+
+.doc p.lb{display:grid;grid-template-columns:auto 1fr;margin:0}
+.doc p.lb .k{font-weight:700;white-space:nowrap}
+.doc li{margin-bottom:.35em}
+.doc p.amt{display:flex;align-items:baseline;gap:6px;margin:0 0 .35em}
+.doc p.amt .ld{flex:1;border-bottom:1.5px dotted var(--line);transform:translateY(-.35em);min-width:12px}
+.doc p.amt strong{white-space:nowrap}
+@media (max-width:480px){.doc p.lb.long{display:block}.doc p.lb.long .k{display:block}.doc p.lb.long .k+span{display:block;padding-left:1em}}
+.doc p.amt .v{font-family:var(--sans);font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap}
+.doc blockquote:has(p.amt){background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.doc th{white-space:nowrap;color:var(--muted);font-weight:500;font-size:14px}
+.doc th strong{font-weight:500}
+.doc td.num,.doc th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.doc tr.grp td{background:color-mix(in srgb,var(--blue) 13%,var(--card));color:var(--blue);font-weight:700}
+.doc tr.grp td:last-child,.doc tr.tot td:last-child{text-align:right}
+.doc tr.tot td{font-weight:700}
+.doc tr.tot td:first-child{text-align:right}
+/* tables → mobile cards */
+.doc table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:15px;line-height:1.5;margin:6px 0 12px}
+.doc th,.doc td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+.doc colgroup{display:none}
+@media (max-width:700px){
+  .doc table,.doc tbody,.doc tr,.doc td{display:block;width:100%}
+  .doc thead{display:none}
+  .doc tr{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:8px;background:var(--paper)}
+  .doc td{border:0;padding:2px 0;display:flex;gap:10px;justify-content:space-between}
+  .doc td::before{content:attr(data-label);color:var(--muted);font-size:13px;flex:none;min-width:4.5em}
+  .doc td:empty,.doc td.blank{display:none}
+  .doc tr.grp{background:color-mix(in srgb,var(--blue) 13%,var(--card));border-color:transparent}
+  .doc tr.grp td::before{display:none}
+  .doc tr.grp td{font-weight:700;background:transparent}
+  .doc td.num{white-space:normal}
+  .doc tr.tot td::before{display:none}
+  .doc tr.tot{background:transparent;border-style:dashed}
+  .doc table.qt tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px;padding:10px 12px}
+  .doc table.qt td{display:inline;width:auto;padding:0}
+  .doc table.qt td::before{display:none}
+  .doc table.qt tr:not(.grp):not(.tot) td:nth-child(1){display:none}
+  .doc table.qt tr:not(.grp):not(.tot) td:nth-child(2){flex:0 0 100%;font-weight:500;margin-bottom:2px}
+  .doc table.qt tr:not(.grp):not(.tot) td:nth-child(3),.doc table.qt tr:not(.grp):not(.tot) td:nth-child(4),.doc table.qt tr:not(.grp):not(.tot) td:nth-child(5){color:var(--muted);font-size:14px}
+  .doc table.qt tr:not(.grp):not(.tot) td:nth-child(5)::before{display:inline;content:"× ";min-width:0;font-size:14px}
+  .doc table.qt tr:not(.grp):not(.tot) td:nth-child(6){margin-left:auto;font-weight:700}
+  .doc table.qt tr.grp td:last-child,.doc table.qt tr.tot td:last-child{margin-left:auto}
+}
+
+/* sign */
+form.f{display:grid;gap:12px}
+.f label{display:grid;gap:4px;font-size:14px;color:var(--muted)}
+.f input,.f select,.f textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font-size:17px}
+.f textarea{min-height:110px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:10px;cursor:pointer;font-weight:700;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.acc{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.sm{min-height:38px;padding:6px 12px;font-size:14px;font-weight:500}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45}
+.link{background:none;border:0;color:var(--accent);padding:6px 0;font-size:14px;text-decoration:underline;cursor:pointer}
+
+.docc h4{font-family:var(--serif);font-size:18px;margin:4px 0 10px;line-height:1.5}
+.docc .dh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.docc .dt{font-size:12px;border:1px solid var(--blue);color:var(--blue);border-radius:99px;padding:0 8px}
+.docc .dt.main{background:var(--ok);border-color:var(--ok);color:#fff}
+/* plans & photos */
+.plan{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;margin-bottom:12px;color:inherit;text-decoration:none}
+.plan .cap{display:flex;justify-content:space-between;gap:8px;align-items:baseline;padding:6px 4px 2px}
+.plan b{font-family:var(--serif);font-size:19px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ph{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ph a{display:block}
+.ph img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--line)}
+.ph .t{padding:6px 8px;font-size:13px;line-height:1.4}
+.ph .x{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.65);color:#fff;border:0;border-radius:6px;font-size:13px;padding:4px 8px}
+.ph .e{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.65);color:#fff;border:0;border-radius:6px;font-size:13px;padding:4px 8px;cursor:pointer}
+.rowlinks{display:flex;gap:16px}
+dialog.dlg{border:0;border-radius:14px;padding:0;width:min(600px,calc(100vw - 20px));max-height:calc(100dvh - 20px);background:var(--card);color:var(--ink)}
+dialog.dlg::backdrop{background:rgba(20,24,29,.5)}
+dialog.dlg .dh{position:sticky;top:0;z-index:2;background:var(--card);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+dialog.dlg .dh b{font-family:var(--serif);font-size:19px}
+dialog.dlg .db{padding:16px;display:grid;gap:12px}
+dialog.dlg .df{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:8px;justify-content:flex-end}
+.x-close{background:none;border:0;font-size:26px;line-height:1;color:var(--muted);cursor:pointer;padding:4px 8px}
+.hint{font-size:13px;color:var(--muted)}
+.eph{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.eph .t{position:relative;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--paper)}
+.eph img{width:100%;aspect-ratio:1;object-fit:cover}
+.eph .pdf{aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:6px;font-size:12px;text-align:center;line-height:1.4;word-break:break-all}
+.eph button{position:absolute;left:4px;right:4px;bottom:4px;border:0;border-radius:6px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;padding:4px 0;cursor:pointer}
+.eph .t.rm img,.eph .t.rm .pdf{opacity:.25}
+.eph .t.rm button{background:var(--accent)}
+.newprev{display:flex;flex-wrap:wrap;gap:6px}
+.newprev img{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.floorhd{font-family:var(--serif);font-weight:700;margin:18px 0 8px}
+.empty{padding:26px 12px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px;font-size:15px}
+
+/* timeline */
+.ev{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.ev .d{font-size:13px;color:var(--muted)}
+.ev .tag{display:inline-block;font-size:12px;border:1px solid var(--blue);color:var(--blue);border-radius:99px;padding:0 8px;margin-left:6px}
+.ev h4{margin:4px 0;font-family:var(--serif);font-size:18px;line-height:1.5}
+.ev p{margin:0 0 10px;white-space:pre-wrap;font-size:16px}
+
+/* admin */
+.adm{display:none !important} body.admin .adm{display:block !important} body.admin form.adm{display:grid !important} body.admin button.adm{display:inline-block !important}
+.admtag{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:31;background:var(--accent);color:#fff;font-size:12px;border-radius:99px;padding:2px 10px;display:none}
+body.admin .admtag{display:block}
+.stedit{padding:10px 0;border-bottom:1px solid var(--line)}
+.stedit .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.stedit select{padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--paper)}
+
+.spin{position:fixed;inset:0;z-index:60;background:rgba(20,24,29,.45);display:none;align-items:center;justify-content:center}
+.spin.on{display:flex}
+.spin div{background:var(--card);padding:16px 22px;border-radius:12px;font-size:15px}
+footer{font-size:13px;color:var(--muted);text-align:center;padding:18px 0 6px}
+
+@media print{
+  nav.bar,.toolbar,.adm,.no-print,header,footer,.admtag{display:none !important}
+  body{padding:0;background:#fff}
+  section.pg{display:none !important} #pg-contract{display:block !important}
+  details.art{border:0} details.art summary::after{display:none}
+  .doc table,.doc tbody,.doc tr,.doc td{display:revert} .doc thead{display:table-header-group} .doc td::before{display:none}
+}
+</style>
+</head>
+<body>
+<div class="admtag">平安住管理模式</div>
+<header>
+  <div class="wrap">
+    <div class="firm">平安住股份有限公司・工程專案頁</div>
+    <h1>裕國街整修工程</h1>
+    <div class="addr">裕國街129號2樓・業主 蔡小姐</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="sysNote" class="note" style="display:none;margin-top:14px"></div>
+
+  <!-- 總覽 -->
+  <section class="pg on" id="pg-home">
+    <div class="kpis">
+      <div class="kpi"><div class="k">合約狀態</div><div class="v" id="kSign">讀取中</div></div>
+      <div class="kpi"><div class="k">目前進度</div><div class="v" id="kStage">讀取中</div></div>
+      <div class="kpi wide"><div class="k">合約總價（含5%營業稅）</div><div class="v" id="kTotal">報價中</div></div>
+    </div>
+    <h3 style="margin-top:18px">施工階段與驗收點</h3>
+    <div class="card" id="stages"></div>
+    <h3>付款期程</h3>
+    <div class="card" id="pays"></div>
+    <h3>最新施工紀錄</h3>
+    <div id="latest"></div>
+  </section>
+
+  <!-- 合約 -->
+  <section class="pg" id="pg-contract">
+    <h2>合約文件</h2>
+    <p class="lead">報價單與合約掃描檔上傳於此備查；日後的追加合約、變更簽認也會陸續放在這裡。</p>
+    <div class="card adm">
+      <b>上傳合約文件</b>
+      <form class="f" id="docForm" style="margin-top:8px">
+        <label>類型<select name="type"><option>報價單</option><option>主合約（簽署版）</option><option>追加合約</option><option>變更簽認</option><option>其他文件</option></select></label>
+        <label>名稱<input name="title" required placeholder="例：整修工程報價單"></label>
+        <label>簽訂日期<input type="date" name="date"></label>
+        <label>檔案（照片或 PDF，可多選，依頁序選取）<input type="file" name="files" accept="image/*,application/pdf" multiple required></label>
+        <button class="btn acc" type="submit">上傳文件</button>
+      </form>
+    </div>
+    <div id="docList"></div>
+
+    <h3>報價與合約</h3>
+    <div class="card">
+      <p style="margin:0">目前已完成<b>鑰匙交付</b>，正在進行現況勘查與丈量。報價確認、合約簽訂後，報價單與合約掃描檔會上傳於上方「合約文件」備查，付款期程也會同步公布在總覽頁。</p>
+    </div>
+
+    <div class="card adm">
+      <b>預定工期（簽約後填寫）</b>
+      <form class="f" id="fieldsForm" style="margin-top:8px">
+        <label>預定開工日<input type="date" name="startDate"></label>
+        <label>預定完工日<input type="date" name="endDate"></label>
+        <label>審閱天數<input name="reviewDays" inputmode="numeric"></label>
+        <button class="btn" type="submit">儲存欄位</button>
+      </form>
+    </div>
+
+    <h3>保險單影本</h3>
+    <div class="card">
+      <p class="small muted" style="margin:0 0 10px">雇主意外責任險及營造綜合保險，於正式簽約後投保，投保完成後補附於此。</p>
+      <div id="policyList"></div>
+      <form class="f adm" id="policyForm" style="margin-top:10px">
+        <label>上傳保單照片（可多張）<input type="file" name="files" accept="image/*" multiple></label>
+        <button class="btn" type="submit">上傳保單</button>
+      </form>
+    </div>
+
+  </section>
+
+  <!-- 平面圖 -->
+  <section class="pg" id="pg-plans">
+    <h2>平面圖</h2>
+    <p class="lead">現況丈量圖與規劃圖。點圖片會開新頁，可用兩指放大查看尺寸。</p>
+    <div class="card adm">
+      <b>上傳平面圖</b>
+      <form class="f" id="planForm" style="margin-top:8px">
+        <label>名稱<input name="caption" required placeholder="例：2F 現況丈量圖、2F 規劃圖"></label>
+        <label>圖檔（可多選）<input type="file" name="files" accept="image/*" multiple></label>
+        <button class="btn acc" type="submit">上傳</button>
+      </form>
+    </div>
+    <div id="planList"></div>
+  </section>
+
+  <!-- 裝潢前 -->
+  <section class="pg" id="pg-before">
+    <h2>裝潢前現況</h2>
+    <p class="lead">施工前各空間原始狀況，作為驗收及釐清既有問題（如原有漏水、管線老化）的依據。</p>
+    <div class="card adm">
+      <b>上傳現況照片</b>
+      <form class="f" id="beforeForm" style="margin-top:8px">
+        <label>位置<select name="floor"></select></label>
+        <label>說明（選填）<input name="caption" placeholder="例：衛浴壁面滲水"></label>
+        <label>照片（可多選）<input type="file" name="files" accept="image/*" multiple></label>
+        <button class="btn acc" type="submit">上傳</button>
+      </form>
+    </div>
+    <div id="beforeList"></div>
+  </section>
+
+  <!-- 進度 -->
+  <section class="pg" id="pg-progress">
+    <h2>施工進度</h2>
+    <p class="lead">每次施工的紀錄、照片與查驗結果。</p>
+    <div class="card adm">
+      <b>階段與驗收點</b>
+      <div id="statusEditor"></div>
+    </div>
+    <div class="card adm">
+      <b>新增施工紀錄</b>
+      <form class="f" id="updForm" style="margin-top:8px">
+        <label>日期<input type="date" name="date" required></label>
+        <label>階段<select name="stage"></select></label>
+        <label>標題<input name="title" required placeholder="例：鑰匙交付、現況勘查丈量"></label>
+        <label>說明<textarea name="note" placeholder="施工內容、需業主確認的事項"></textarea></label>
+        <label>照片（可多選）<input type="file" name="files" accept="image/*" multiple></label>
+        <button class="btn acc" type="submit">發布</button>
+      </form>
+    </div>
+    <div id="timeline"></div>
+  </section>
+
+  <footer>平安住股份有限公司・統編 90052437・07-9623551 分機555<br>
+    <button class="link" id="admBtn">平安住登入</button></footer>
+</main>
+
+<nav class="bar" role="tablist">
+  <button data-p="home" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>總覽</button>
+  <button data-p="contract" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>合約</button>
+  <button data-p="plans" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M3 4h18v16H3z"/><path d="M3 11h8V4M11 20v-5h10"/></svg>平面圖</button>
+  <button data-p="before" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 7h4l2-3h4l2 3h4v13H4z"/><circle cx="12" cy="13" r="3.5"/></svg>施工前</button>
+  <button data-p="progress" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>進度</button>
+</nav>
+
+<dialog class="dlg" id="edlg">
+  <form id="edForm" novalidate>
+    <div class="dh"><b id="edTitle">編輯</b><button type="button" class="x-close" data-eclose aria-label="關閉">×</button></div>
+    <div class="db f" id="edBody"></div>
+    <div class="df"><button type="button" class="btn ghost" data-eclose>取消</button><button type="submit" class="btn acc">儲存</button></div>
+  </form>
+</dialog>
+
+<div class="spin" id="spin"><div id="spinTxt">處理中…</div></div>
+
+<script>
+/* ======== 設定：貼上 Apps Script 網頁應用程式部署網址 ======== */
+const API = 'PASTE_APPS_SCRIPT_URL_HERE';
+/* ============================================================ */
+
+const FLOORS=['客廳','餐廳／廚房','臥室','衛浴','陽台','其他'];
+// 簽約前先用前置階段；報價確認後再改成正式施工階段與驗收點
+const STAGES=[
+  {k:'s1',n:'點交與勘查',d:'鑰匙交付、現況拍照、丈量',checks:['鑰匙交付','現況勘查完成']},
+  {k:'s2',n:'報價與簽約',d:'提出報價、確認工程內容、簽訂合約',checks:['報價確認','合約簽訂']},
+  {k:'s3',n:'施工',d:'依合約施工（細部階段於簽約後補上）',checks:[]},
+  {k:'s4',n:'完工驗收',d:'總驗收、結算追加減',checks:['總驗收']}];
+// 付款期程：簽約後填入，格式例：{p:'第一期',c:'簽約時',pct:'30%',net:未稅,tax:稅金,need:['__SIGN__']}
+const PAYS=[];
+const TOTAL=PAYS.reduce((t,p)=>t+p.net+p.tax,0);
+
+const D={fields:{},docs:[],status:{stages:{},checks:{},paid:{}},photos:[],updates:[]};
+let PASS=sessionStorage.getItem('yk_pass')||'';
+let ADMIN=false;
+const $=(s,e=document)=>e.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'NT$'+n.toLocaleString('en-US');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const roc=s=>{if(!s)return'';const [y,m,d]=String(s).slice(0,10).split('-');return `${+y-1911}年${+m}月${+d}日`;};
+const fmtT=s=>{if(!s)return'';const d=new Date(s);return `${d.getFullYear()-1911}/${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;};
+const img=(id,w)=>`https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${w}`;
+const configured=()=>/^https:\/\/script\.google\.com\//.test(API);
+
+function busy(on,t){ $('#spin').classList.toggle('on',on); if(t) $('#spinTxt').textContent=t; }
+async function apiGet(){ const r=await fetch(API+'?action=all'+(PASS?'&pass='+encodeURIComponent(PASS):''),{cache:'no-store'}); const j=await r.json(); if(!j.ok) throw new Error(j.error); return j; }
+async function apiPost(body){ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...body,pass:PASS})}); const j=await r.json(); if(!j.ok) throw new Error(j.error); return j; }
+
+/* ---------- nav ---------- */
+document.querySelectorAll('nav.bar button').forEach(b=>b.onclick=()=>go(b.dataset.p));
+function go(p){ document.querySelectorAll('nav.bar button').forEach(b=>b.setAttribute('aria-selected',b.dataset.p===p));
+  document.querySelectorAll('section.pg').forEach(s=>s.classList.toggle('on',s.id==='pg-'+p)); window.scrollTo(0,0); history.replaceState(null,'','#'+p); }
+const h=location.hash.slice(1); if(['home','contract','plans','before','progress'].includes(h)) go(h);
+
+/* ---------- contract helpers ---------- */
+if($('#openAll')) $('#openAll').onclick=()=>document.querySelectorAll('details.art').forEach(d=>d.open=true);
+if($('#closeAll')) $('#closeAll').onclick=()=>document.querySelectorAll('details.art').forEach(d=>d.open=false);
+window.addEventListener('beforeprint',()=>document.querySelectorAll('details.art').forEach(d=>d.open=true));
+document.querySelectorAll('.doc table').forEach(t=>{
+  const heads=[...t.querySelectorAll('thead th')].map(th=>th.textContent.trim()); if(heads.includes('單價')) t.classList.add('qt'); const NUM=['數量','單價','金額','比例','金額（含稅）']; t.querySelectorAll('thead th').forEach((th,i)=>{ if(NUM.includes(th.textContent.trim())) th.classList.add('num'); });
+  t.querySelectorAll('tbody tr').forEach(tr=>{ const tds=[...tr.children]; let col=0;
+    tds.forEach(td=>{ td.setAttribute('data-label',heads[col]||''); if(['數量','單價','金額','比例','金額（含稅）'].includes(heads[col])) td.classList.add('num'); if(!td.textContent.trim()) td.classList.add('blank'); col+=+(td.getAttribute('colspan')||1); });
+    if(tds.some(td=>+(td.getAttribute('colspan')||1)>=3)) tr.classList.add(tds.length<=2?'tot':'grp'); });
+});
+function renderFields(){
+  const f=D.fields||{};
+  const put=(k,v,ph)=>document.querySelectorAll(`.fill[data-f="${k}"]`).forEach(el=>{el.textContent=v||ph;el.classList.toggle('empty',!v);});
+  put('startDate',roc(f.startDate),'＿＿年＿＿月＿＿日'); put('endDate',roc(f.endDate),'＿＿年＿＿月＿＿日'); put('reviewDays',f.reviewDays,'＿＿');
+  const fm=$('#fieldsForm'); ['startDate','endDate','reviewDays'].forEach(k=>fm[k].value=f[k]||'');
+}
+function mainDoc(){ return D.docs.find(d=>d.type==='主合約（簽署版）'); }
+function renderDocs(){
+  const md=mainDoc();
+  $('#kSign').innerHTML = md ? `已簽約${md.date?`<div class="small muted" style="font-family:var(--sans);font-weight:400">${esc(String(md.date).slice(0,10).split('-').map((v,i)=>i?+v:+v-1911).join('/'))}</div>`:''}` : '尚未簽約';
+  const list=[...D.docs].sort((a,b)=>String(a.date).localeCompare(String(b.date))||String(a.createdAt).localeCompare(String(b.createdAt)));
+  $('#docList').innerHTML = list.length ? list.map(d=>{
+    const imgs=(d.files||[]).filter(f=>String(f.mime).startsWith('image/')), pdfs=(d.files||[]).filter(f=>f.mime==='application/pdf');
+    return `<div class="card docc"><div class="dh"><span class="dt ${d.type==='主合約（簽署版）'?'main':''}">${esc(d.type)}</span><span class="muted small">${esc(roc(d.date))}</span></div>
+      <h4>${esc(d.title)}</h4>
+      ${imgs.length?`<div class="grid">${imgs.map((f,i)=>`<div class="ph"><a href="${img(f.id,2400)}" target="_blank" rel="noopener"><img src="${img(f.id,700)}" loading="lazy" alt="第${i+1}頁"></a><div class="t">第 ${i+1} 頁</div></div>`).join('')}</div>`:''}
+      ${pdfs.map(f=>`<a class="btn ghost block" style="margin-top:8px" href="https://drive.google.com/file/d/${encodeURIComponent(f.id)}/view" target="_blank" rel="noopener">開啟 PDF：${esc(f.name||'文件')}</a>`).join('')}
+      ${!(d.files||[]).length?'<div class="small muted">（尚無檔案）</div>':''}
+      ${ADMIN?`<div class="rowlinks"><button class="link" data-ed="${esc(d.id)}">編輯／補上傳</button><button class="link" data-dd="${esc(d.id)}">刪除此文件</button></div>`:''}</div>`; }).join('')
+    : '<div class="empty">報價及合約確認後，會將文件上傳於此備查</div>';
+  $('#docList').querySelectorAll('[data-dd]').forEach(b=>b.onclick=()=>act('deleteDoc',{id:b.dataset.dd},'刪除此文件及所有檔案？'));
+  $('#docList').querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>editDoc(D.docs.find(d=>d.id===b.dataset.ed)));
+}
+async function fileData(f){
+  if(f.type==='application/pdf'){ if(f.size>20*1024*1024) throw new Error('PDF 超過 20MB'); return await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f);}); }
+  return await shrink(f,2200);
+}
+
+/* ---------- stages / pay ---------- */
+const stg=k=>(D.status.stages||{})[k]||'未開始';
+const chk=n=>(D.status.checks||{})[n];
+function renderStages(){
+  $('#stages').innerHTML=STAGES.map((s,i)=>`<div class="stg" data-s="${stg(s.k)}"><div class="num">${stg(s.k)==='已完成'?'✓':i+1}</div>
+    <div><div><span class="t">${s.n}</span><span class="s">${stg(s.k)}</span></div><div class="d">${s.d}</div>
+    ${s.checks.map(c=>{const v=chk(c);return `<div class="chk"><span class="dot ${v?'pass':''}"></span><span>${c}${v?`<span class="muted small">　${esc(roc(v.date))}合格</span>`:''}</span></div>`;}).join('')}</div></div>`).join('');
+  const cur=[...STAGES].reverse().find(s=>stg(s.k)==='施工中')||[...STAGES].reverse().find(s=>stg(s.k)==='已完成');
+  $('#kStage').textContent=STAGES.every(s=>stg(s.k)==='已完成')?'全部完工':cur?`${cur.n}${stg(cur.k)}`:'準備中';
+  const paid=D.status.paid||{};
+  const ready=p=>p.need.every(n=>n==='__SIGN__'?!!mainDoc():!!chk(n));
+  // 每期收款紀錄：{net:日期, tax:日期}；舊格式（單一日期字串）視為未稅、稅金皆已收
+  const pof=i=>{const v=paid[i];if(!v)return{};if(typeof v==='string')return{net:v,tax:v};return v;};
+  let got=0; PAYS.forEach((p,i)=>{const r=pof(i);if(r.net)got+=p.net;if(r.tax)got+=p.tax;});
+  const line=(i,key,nm,amt,dt)=>`<label class="ln ${dt?'got':''}"><input type="checkbox" data-pk="${i}|${key}" ${dt?'checked':''} ${ADMIN?'':'disabled'}>
+      <span class="nm">${nm}${dt?`<span class="dt">已收 ${esc(roc(dt))}</span>`:''}</span><span class="m">${money(amt)}</span></label>`;
+  if($('#kTotal')) $('#kTotal').textContent=TOTAL?money(TOTAL):'報價中';
+  if(!PAYS.length){ $('#pays').innerHTML='<div class="small muted">報價確認、簽約後公布付款期程。</div>'; }
+  else $('#pays').innerHTML=`<div class="paysum"><span>已收款 <b>${money(got)}</b></span><span class="muted">未收 <b>${money(TOTAL-got)}</b></span></div>`+
+    PAYS.map((p,i)=>{const r=pof(i);const all=r.net&&r.tax,any=r.net||r.tax;
+    const st=all?'<span class="pill done">已收款</span>':any?`<span class="pill part">部分收款・${r.net?'稅金':'未稅'}未收</span>`:ready(p)?'<span class="pill go">可請款</span>':'<span class="pill">未達條件</span>';
+    return `<div class="payi"><div class="hd"><div><b>${p.p}</b>　<span class="muted small">${p.pct}</span><div class="c">${p.c}</div>${st}</div>
+      <div class="a">${money(p.net+p.tax)}<div class="muted small" style="font-weight:400">含稅</div></div></div>
+      <div class="lines">${line(i,'net','未稅金額',p.net,r.net)}${line(i,'tax','營業稅 5%',p.tax,r.tax)}</div></div>`;}).join('')+
+    (ADMIN?'<p class="small muted" style="margin:8px 0 0">勾選即標記收款，日期自動為今天；取消勾選會清除該筆收款日期。</p>':'');
+  $('#pays').querySelectorAll('[data-pk]').forEach(cb=>cb.onchange=()=>{
+    const [i,key]=cb.dataset.pk.split('|'); const p={...paid}; const r={...pof(i)};
+    if(cb.checked) r[key]=today(); else { if(!confirm(`取消${PAYS[i].p}「${key==='net'?'未稅金額':'營業稅'}」收款紀錄？`)){cb.checked=true;return;} delete r[key]; }
+    if(r.net||r.tax) p[i]=r; else delete p[i]; saveStatus({paid:p});});
+  if(ADMIN){
+    $('#statusEditor').innerHTML=STAGES.map(s=>`<div class="stedit"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>${s.n}</b>
+      <select data-st="${s.k}">${['未開始','施工中','已完成'].map(v=>`<option ${stg(s.k)===v?'selected':''}>${v}</option>`).join('')}</select></div>
+      <div class="chips">${s.checks.map(c=>`<button class="btn sm ${chk(c)?'':'ghost'}" data-ck="${c}">${chk(c)?'✓ ':''}${c}</button>`).join('')}</div></div>`).join('')+
+      '<p class="small muted" style="margin:8px 0 0">點驗收點可標記／取消合格，日期自動為今天。</p>';
+    $('#statusEditor').querySelectorAll('[data-st]').forEach(sel=>sel.onchange=()=>saveStatus({stages:{...(D.status.stages||{}),[sel.dataset.st]:sel.value}}));
+    $('#statusEditor').querySelectorAll('[data-ck]').forEach(b=>b.onclick=()=>{const c={...(D.status.checks||{})};const n=b.dataset.ck;
+      if(c[n]){if(!confirm(`取消「${n}」合格紀錄？`))return;delete c[n];}else c[n]={date:today()};saveStatus({checks:c});});
+  }
+}
+async function saveStatus(patch){ const next={...D.status,...patch}; busy(true,'儲存中…');
+  try{ await apiPost({action:'saveStatus',...next}); D.status=next; renderStages(); }catch(err){ alert('儲存失敗：'+err.message); } busy(false); }
+
+/* ---------- photos ---------- */
+async function shrink(file,max=1600){
+  const bmp=await createImageBitmap(file); const sc=Math.min(1,max/Math.max(bmp.width,bmp.height));
+  const c=document.createElement('canvas'); c.width=Math.round(bmp.width*sc); c.height=Math.round(bmp.height*sc);
+  c.getContext('2d').drawImage(bmp,0,0,c.width,c.height); return c.toDataURL('image/jpeg',0.8);
+}
+async function uploadAll(files,meta){
+  const ids=[]; let i=0;
+  for(const f of files){ i++; busy(true,`上傳照片 ${i}/${files.length}…`); const data=await shrink(f); const r=await apiPost({action:'uploadPhoto',data,...meta}); ids.push(r.id); }
+  return ids;
+}
+$('#beforeForm').onsubmit=async e=>{ e.preventDefault(); const f=e.target; const files=[...f.files.files]; if(!files.length) return alert('請選擇照片');
+  try{ await uploadAll(files,{cat:'before',floor:f.floor.value,caption:f.caption.value.trim()}); f.files.value=''; f.caption.value=''; await load(); }
+  catch(err){ alert('上傳失敗：'+err.message); } busy(false); };
+function phHtml(p){ return `<div class="ph"><a href="${img(p.fileId,2400)}" target="_blank" rel="noopener"><img src="${img(p.fileId,700)}" alt="${esc(p.caption||p.floor)}" loading="lazy"></a>
+  ${p.caption?`<div class="t">${esc(p.caption)}</div>`:''}${ADMIN?`<button class="e" data-ep="${esc(p.id)}">編輯</button><button class="x" data-dp="${esc(p.id)}">刪除</button>`:''}</div>`; }
+function renderBefore(){
+  const list=D.photos.filter(p=>p.cat==='before');
+  $('#beforeList').innerHTML=list.length?FLOORS.map(fl=>{const ps=list.filter(p=>p.floor===fl);return ps.length?`<div class="floorhd">${esc(fl)}　<span class="muted small">${ps.length} 張</span></div><div class="grid">${ps.map(phHtml).join('')}</div>`:'';}).join(''):'<div class="empty">尚未上傳裝潢前照片</div>';
+  $('#beforeList').querySelectorAll('[data-dp]').forEach(b=>b.onclick=()=>act('deletePhoto',{id:b.dataset.dp},'刪除這張照片？'));
+  $('#beforeList').querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>editPhoto(D.photos.find(p=>p.id===b.dataset.ep)));
+}
+
+$('#docForm').onsubmit=async e=>{ e.preventDefault(); const f=e.target; const files=[...f.files.files]; if(!files.length) return alert('請選擇檔案');
+  try{ busy(true,'建立文件…'); const r=await apiPost({action:'addDoc',type:f.type.value,title:f.title.value.trim(),date:f.date.value});
+    let i=0; for(const file of files){ i++; busy(true,`上傳 ${i}/${files.length}…`); await apiPost({action:'uploadDocFile',docId:r.id,name:file.name,data:await fileData(file)}); }
+    f.title.value=''; f.files.value=''; await load(); }
+  catch(err){ alert('上傳失敗：'+err.message); } busy(false); };
+$('#policyForm').onsubmit=async e=>{ e.preventDefault(); const f=e.target; const files=[...f.files.files]; if(!files.length) return alert('請選擇保單照片');
+  try{ await uploadAll(files,{cat:'policy',floor:'',caption:'保險單'}); f.files.value=''; await load(); }catch(err){ alert('上傳失敗：'+err.message); } busy(false); };
+function renderPolicy(){ const ps=D.photos.filter(p=>p.cat==='policy');
+  $('#policyList').innerHTML=ps.length?`<div class="grid">${ps.map(phHtml).join('')}</div>`:'<div class="empty" style="padding:16px">尚未投保（正式簽約後補附）</div>';
+  $('#policyList').querySelectorAll('[data-dp]').forEach(b=>b.onclick=()=>act('deletePhoto',{id:b.dataset.dp},'刪除這張保單照片？'));
+  $('#policyList').querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>editPhoto(D.photos.find(p=>p.id===b.dataset.ep))); }
+
+$('#planForm').onsubmit=async e=>{ e.preventDefault(); const f=e.target; const files=[...f.files.files]; if(!files.length) return alert('請選擇圖檔');
+  try{ await uploadAll(files,{cat:'plan',floor:'',caption:f.caption.value.trim()}); f.files.value=''; f.caption.value=''; await load(); }
+  catch(err){ alert('上傳失敗：'+err.message); } busy(false); };
+function renderPlans(){ const ps=D.photos.filter(p=>p.cat==='plan');
+  $('#planList').innerHTML=ps.length?ps.map(p=>`<div class="plan"><a href="${img(p.fileId,2400)}" target="_blank" rel="noopener"><img src="${img(p.fileId,1400)}" alt="${esc(p.caption)}" loading="lazy"></a><div class="cap"><b>${esc(p.caption||'平面圖')}</b>${ADMIN?`<span><button class="link" data-ep="${esc(p.id)}">編輯</button>　<button class="link" data-dp="${esc(p.id)}">刪除</button></span>`:''}</div></div>`).join(''):'<div class="empty">丈量完成後會將平面圖上傳於此</div>';
+  $('#planList').querySelectorAll('[data-dp]').forEach(b=>b.onclick=()=>act('deletePhoto',{id:b.dataset.dp},'刪除這張平面圖？'));
+  $('#planList').querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>editPhoto(D.photos.find(p=>p.id===b.dataset.ep))); }
+
+/* ---------- updates ---------- */
+$('#updForm').onsubmit=async e=>{ e.preventDefault(); const f=e.target; const files=[...f.files.files];
+  try{ const ids=files.length?await uploadAll(files,{cat:'update',floor:'',caption:f.title.value.trim()}):[];
+    busy(true,'發布中…'); await apiPost({action:'addUpdate',date:f.date.value,stage:f.stage.value,title:f.title.value.trim(),note:f.note.value.trim(),photoIds:ids});
+    f.title.value='';f.note.value='';f.files.value=''; await load(); }
+  catch(err){ alert('發布失敗：'+err.message); } busy(false); };
+function evHtml(u){ const ps=(u.photoIds||[]).map(id=>D.photos.find(p=>p.id===id)).filter(Boolean);
+  return `<div class="ev"><div class="d">${esc(roc(u.date))}<span class="tag">${esc(String(u.stage||'').split('｜')[0])}</span></div>
+    <h4>${esc(u.title)}</h4>${u.note?`<p>${esc(u.note)}</p>`:''}${ps.length?`<div class="grid">${ps.map(p=>`<div class="ph"><a href="${img(p.fileId,2400)}" target="_blank" rel="noopener"><img src="${img(p.fileId,700)}" loading="lazy" alt=""></a></div>`).join('')}</div>`:''}
+    ${ADMIN?`<div class="rowlinks"><button class="link" data-eu="${esc(u.id)}">編輯此紀錄</button><button class="link" data-du="${esc(u.id)}">刪除此紀錄</button></div>`:''}</div>`; }
+function renderUpdates(){
+  const list=[...D.updates].sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.createdAt).localeCompare(String(a.createdAt)));
+  $('#timeline').innerHTML=list.length?list.map(evHtml).join(''):'<div class="empty">尚無施工紀錄</div>';
+  $('#latest').innerHTML=list.length?list.slice(0,2).map(evHtml).join('')+'<button class="btn ghost block" onclick="go(\'progress\')">查看全部紀錄</button>':'<div class="empty">勘查與施工紀錄會公布在這裡</div>';
+  document.querySelectorAll('[data-du]').forEach(b=>b.onclick=()=>act('deleteUpdate',{id:b.dataset.du},'刪除這筆施工紀錄（含照片）？'));
+  document.querySelectorAll('[data-eu]').forEach(b=>b.onclick=()=>editUpdate(D.updates.find(u=>u.id===b.dataset.eu)));
+}
+
+/* ---------- 編輯 ---------- */
+let ED_SAVE=null;
+function openEditor(title,html,onSave){ $('#edTitle').textContent=title; $('#edBody').innerHTML=html; ED_SAVE=onSave; $('#edlg').showModal(); $('#edlg .db').scrollTop=0; }
+document.querySelectorAll('[data-eclose]').forEach(b=>b.onclick=()=>$('#edlg').close());
+$('#edForm').onsubmit=async e=>{ e.preventDefault(); if(!ED_SAVE) return;
+  try{ const ok=await ED_SAVE($('#edBody')); if(ok===false){ busy(false); return; } $('#edlg').close(); await load(); }
+  catch(err){ alert('儲存失敗：'+err.message); } busy(false); };
+const optsH=(arr,cur)=>{ const a=arr.includes(cur)||!cur?arr:[cur,...arr]; return a.map(v=>`<option ${v===cur?'selected':''}>${esc(v)}</option>`).join(''); };
+function tilesHtml(items){ return items.length?`<div class="eph">${items.map(t=>`<div class="t" data-tid="${esc(t.id)}">${t.img?`<img src="${img(t.img,300)}" alt="">`:`<div class="pdf">📄 ${esc(t.name||'PDF')}</div>`}<button type="button">移除</button></div>`).join('')}</div>`:'<div class="hint">（目前沒有）</div>'; }
+function bindTiles(box){ box.querySelectorAll('.eph .t').forEach(t=>t.querySelector('button').onclick=()=>{ t.classList.toggle('rm'); t.querySelector('button').textContent=t.classList.contains('rm')?'復原':'移除'; }); }
+const marked=box=>[...box.querySelectorAll('.eph .t.rm')].map(t=>t.dataset.tid);
+function bindPreview(input,out){ input.onchange=()=>{ out.innerHTML=[...input.files].map(f=>f.type.startsWith('image/')?`<img src="${URL.createObjectURL(f)}" alt="">`:`<span class="small">📄 ${esc(f.name)}</span>`).join(''); }; }
+
+function editUpdate(u){ if(!u) return;
+  const ps=(u.photoIds||[]).map(id=>D.photos.find(p=>p.id===id)).filter(Boolean);
+  const stages=STAGES.map(s=>s.n+'｜'+s.d).concat(['其他']);
+  openEditor('編輯施工紀錄',`
+    <label>日期<input type="date" name="date" value="${esc(String(u.date||'').slice(0,10))}" required></label>
+    <label>階段<select name="stage">${optsH(stages,u.stage)}</select></label>
+    <label>標題<input name="title" value="${esc(u.title)}" required></label>
+    <label>說明<textarea name="note">${esc(u.note)}</textarea></label>
+    <label>目前照片（點「移除」可刪掉單張）</label>${tilesHtml(ps.map(p=>({id:p.id,img:p.fileId})))}
+    <label>補上傳照片（可多選）<input type="file" name="files" accept="image/*" multiple></label><div class="newprev" id="np"></div>`,
+    async box=>{ const v=n=>box.querySelector(`[name=${n}]`).value.trim();
+      if(!v('date')||!v('title')){ alert('請填日期和標題'); return false; }
+      const rm=marked(box); if(rm.length&&!confirm(`確定移除 ${rm.length} 張照片？`)) return false;
+      const files=[...box.querySelector('[name=files]').files];
+      const add=files.length?await uploadAll(files,{cat:'update',floor:'',caption:v('title')}):[];
+      busy(true,'儲存中…');
+      await apiPost({action:'editUpdate',id:u.id,date:v('date'),stage:v('stage'),title:v('title'),note:box.querySelector('[name=note]').value.trim(),addPhotoIds:add,removePhotoIds:rm}); });
+  bindTiles($('#edBody')); bindPreview($('#edBody [name=files]'),$('#np')); }
+
+function editDoc(d){ if(!d) return;
+  const types=['報價單','主合約（簽署版）','追加合約','變更簽認','其他文件'];
+  openEditor('編輯合約文件',`
+    <label>類型<select name="type">${optsH(types,d.type)}</select></label>
+    <label>名稱<input name="title" value="${esc(d.title)}" required></label>
+    <label>簽訂日期<input type="date" name="date" value="${esc(String(d.date||'').slice(0,10))}"></label>
+    <label>目前檔案（點「移除」可刪掉單頁）</label>${tilesHtml((d.files||[]).map(f=>({id:f.id,img:String(f.mime).startsWith('image/')?f.id:'',name:f.name})))}
+    <label>補上傳檔案（照片或 PDF，可多選，會接在最後面）<input type="file" name="files" accept="image/*,application/pdf" multiple></label><div class="newprev" id="np"></div>`,
+    async box=>{ const v=n=>box.querySelector(`[name=${n}]`).value.trim();
+      if(!v('title')){ alert('請填名稱'); return false; }
+      const rm=marked(box); if(rm.length&&!confirm(`確定移除 ${rm.length} 個檔案？`)) return false;
+      const files=[...box.querySelector('[name=files]').files]; let i=0;
+      for(const f of files){ i++; busy(true,`上傳 ${i}/${files.length}…`); await apiPost({action:'uploadDocFile',docId:d.id,name:f.name,data:await fileData(f)}); }
+      busy(true,'儲存中…');
+      await apiPost({action:'editDoc',id:d.id,type:v('type'),title:v('title'),date:v('date'),removeFileIds:rm}); });
+  bindTiles($('#edBody')); bindPreview($('#edBody [name=files]'),$('#np')); }
+
+function editPhoto(p){ if(!p) return;
+  openEditor(p.cat==='policy'?'編輯保單照片說明':p.cat==='plan'?'編輯平面圖名稱':'編輯照片說明',`
+    <img src="${img(p.fileId,700)}" alt="" style="border-radius:8px;max-height:240px;object-fit:contain;background:var(--paper);margin:0 auto">
+    ${p.cat==='policy'||p.cat==='plan'?'':`<label>位置<select name="floor">${optsH(FLOORS,p.floor)}</select></label>`}
+    <label>說明<input name="caption" value="${esc(p.caption)}"></label>`,
+    async box=>{ busy(true,'儲存中…'); const fl=box.querySelector('[name=floor]');
+      await apiPost({action:'editPhoto',id:p.id,caption:box.querySelector('[name=caption]').value.trim(),...(fl?{floor:fl.value}:{})}); }); }
+
+/* ---------- admin ---------- */
+async function act(action,data,ask){ if(ask&&!confirm(ask))return; busy(true,'處理中…'); try{ await apiPost({action,...data}); await load(); }catch(err){ alert('失敗：'+err.message); } busy(false); }
+$('#fieldsForm').onsubmit=async e=>{ e.preventDefault(); const f=e.target; busy(true,'儲存中…');
+  try{ await apiPost({action:'saveFields',startDate:f.startDate.value,endDate:f.endDate.value,reviewDays:f.reviewDays.value.trim()}); await load(); }
+  catch(err){ alert('失敗：'+err.message); } busy(false); };
+$('#admBtn').onclick=async()=>{
+  if(ADMIN){ if(confirm('登出管理模式？')){ PASS='';sessionStorage.removeItem('yk_pass'); setAdmin(false); await load(); } return; }
+  const p=prompt('請輸入平安住管理密碼'); if(!p) return; PASS=p; busy(true,'驗證中…');
+  try{ await apiPost({action:'checkAdmin'}); sessionStorage.setItem('yk_pass',p); setAdmin(true); await load(); }
+  catch(err){ PASS=''; alert('登入失敗：'+err.message); } busy(false);
+};
+function setAdmin(on){ ADMIN=on; document.body.classList.toggle('admin',on); $('#admBtn').textContent=on?'登出管理模式':'平安住登入';  }
+
+/* ---------- init ---------- */
+const sel=(el,arr)=>el.innerHTML=arr.map(v=>`<option>${esc(v)}</option>`).join('');
+sel($('#beforeForm [name=floor]'),FLOORS);
+sel($('#updForm [name=stage]'),STAGES.map(s=>s.n+'｜'+s.d).concat(['其他']));
+$('#updForm [name=date]').value=today();
+
+async function load(){
+  const j=await apiGet();
+  Object.assign(D,{fields:j.fields||{},docs:j.docs||[],status:{stages:{},checks:{},paid:{},...(j.status||{})},photos:j.photos||[],updates:j.updates||[]});
+  if(PASS && !j.admin){ PASS=''; sessionStorage.removeItem('yk_pass'); setAdmin(false); } else if(j.admin && !ADMIN) setAdmin(true);
+  renderFields(); renderDocs(); renderStages(); renderBefore(); renderPolicy(); renderPlans(); renderUpdates();
+}
+renderFields(); renderDocs(); renderStages(); renderBefore(); renderPolicy(); renderPlans(); renderUpdates();
+if(!configured()){ const n=$('#sysNote'); n.style.display='block'; n.textContent='尚未設定後端網址：需完成 Apps Script 部署後才會顯示資料。'; }
+else { busy(true,'讀取中…'); load().catch(err=>{ const n=$('#sysNote'); n.style.display='block'; n.textContent='資料讀取失敗：'+err.message; }).finally(()=>busy(false)); }
+</script>
+</body>
+</html>
